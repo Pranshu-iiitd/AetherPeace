@@ -3,7 +3,7 @@
 **Your Anonymous Path to Mental Peace**  
 *A secure, AI-powered platform providing 24/7 mental health support with complete anonymity.*
 
-#Deployed at - https://pranshu-iiitd.github.io/AetherPeace
+#Deployed at - [https://pranshu-iiitd.github.io/AetherPeace](https://pranshu-iiitd.github.io/AetherPeace/)
 
 ## 🌟 Features
 
