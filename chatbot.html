@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot - AetherPeace</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <a href="index.html" class="logo">AetherPeace</a>
+      <nav>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="profile.html">Profile</a>
+        <a href="logout.html">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="passwordGate" class="password-gate">
+    <h2>Enter Password to Access Chat</h2>
+    <form id="passwordForm">
+      <div class="form-group">
+        <input type="password" id="chatPassword" class="form-control" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="btn">Access Chat</button>
+    </form>
+  </main>
+
+  <main id="chatInterface" style="display: none;">
+    <div class="chatbot-container">
+      <div class="chat-history">
+        <h3>Chat History</h3>
+        <div id="chatList">
+          <!-- Chat history items will be added here by JavaScript -->
+        </div>
+      </div>
+      <div class="chat-main">
+        <div class="chat-messages" id="chatMessages">
+          <!-- Messages will be added here by JavaScript -->
+        </div>
+        <form id="messageForm" class="message-form">
+          <input type="text" id="messageInput" class="message-input" placeholder="Type your message..." required>
+          <button type="submit" class="btn">Send</button>
+        </form>
+      </div>
+      <div class="emergency-contacts">
+        <h3>Emergency Contacts</h3>
+        <div class="contact-item">
+          <strong>Mental Health Helpline</strong>
+          <p>919999666555</p>
+        </div>
+        <div class="contact-item">
+          <strong>Police</strong>
+          <p>100</p>
+        </div>
+        <div class="contact-item">
+          <strong>Ambulance</strong>
+          <p>108</p>
+        </div>
+        <div class="contact-item">
+          <strong>Suicide Prevention</strong>
+          <p>800-273-8255</p>
+        </div>
+        <div class="contact-item">
+          <strong>Crisis Text Line</strong>
+          <p>Text HOME to 741741</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-section">
+        <h3>AetherPeace</h3>
+        <p>Your anonymous path to mental peace. Providing 24/7 AI-powered mental health support.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Emergency Contacts</h3>
+        <ul>
+          <li>Mental Health Helpline: 919999666555</li>
+          <li>Police: 100</li>
+          <li>Ambulance: 108</li>
+        </ul>
+      </div>
+    </div>
+    <div class="container copyright">
+      <p>&copy; 2023 AetherPeace. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

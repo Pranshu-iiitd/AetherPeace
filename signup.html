@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - AetherPeace</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <a href="index.html" class="logo">AetherPeace</a>
+      <nav>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html" class="signup-btn">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <h2 class="form-title">Create Your Account</h2>
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to the <a href="terms.html" style="color: var(--primary-green);">Terms of Service</a> and <a href="privacy.html" style="color: var(--primary-green);">Privacy Policy</a></label>
+          </div>
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Create Account</button>
+      </form>
+      <p style="text-align: center; margin-top: 1.5rem; color: var(--text-gray);">
+        Already have an account? <a href="login.html" style="color: var(--primary-green);">Login</a>
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-section">
+        <h3>AetherPeace</h3>
+        <p>Your anonymous path to mental peace. Providing 24/7 AI-powered mental health support.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Emergency Contacts</h3>
+        <ul>
+          <li>Mental Health Helpline: 919999666555</li>
+          <li>Police: 100</li>
+          <li>Ambulance: 108</li>
+        </ul>
+      </div>
+    </div>
+    <div class="container copyright">
+      <p>&copy; 2023 AetherPeace. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>
