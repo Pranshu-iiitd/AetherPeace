@@ -5,6 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile - AetherPeace</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .profile-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: var(--primary-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .profile-details {
+      background-color: var(--bg-light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .detail-row {
+      display: flex;
+      margin-bottom: 1rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-gray);
+    }
+    .detail-label {
+      width: 150px;
+      font-weight: 600;
+      color: var(--primary-green);
+    }
+    .detail-value {
+      flex: 1;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .chatbot-access {
+      background-color: var(--primary-green);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.3s;
+    }
+    .chatbot-access:hover {
+      background-color: var(--dark-green);
+    }
+    .btn-edit-profile {
+      background-color: var(--bg-light);
+      color: var(--text-white);
+      border: 1px solid var(--primary-green);
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -14,51 +84,58 @@
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <a href="profile.html">Profile</a>
-        <a href="logout.html">Logout</a>
+        <a href="index.html">Logout</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <div class="container" style="padding: 2rem 0;">
-      <div class="profile-header">
-        <div class="profile-avatar">U</div>
+  <main class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar" id="avatarInitial">U</div>
+      <div>
         <h2>Welcome, <span id="profileUsername">User</span></h2>
+        <p id="profileEmail">user@example.com</p>
       </div>
+    </div>
 
-      <div class="profile-details">
-        <h3 style="color: var(--primary-green); margin-bottom: 1.5rem;">Personal Information</h3>
-        <div class="detail-row">
-          <div class="detail-label">Name:</div>
-          <div id="profileName">Not set</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Email:</div>
-          <div id="profileEmail">user@example.com</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Age:</div>
-          <div id="profileAge">Not set</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Gender:</div>
-          <div id="profileGender">Not set</div>
-        </div>
+    <div class="profile-details">
+      <h3 style="color: var(--primary-green); margin-bottom: 1.5rem;">Personal Information</h3>
+      <div class="detail-row">
+        <div class="detail-label">Name:</div>
+        <div class="detail-value" id="profileName">Not set</div>
       </div>
-
-      <div class="profile-details">
-        <h3 style="color: var(--primary-green); margin-bottom: 1.5rem;">Chatbot Preferences</h3>
-        <div class="detail-row">
-          <div class="detail-label">Chatbot Persona:</div>
-          <div id="chatbotPersona">Therapist</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Color Theme:</div>
-          <div id="colorTheme">Dark</div>
-        </div>
+      <div class="detail-row">
+        <div class="detail-label">Email:</div>
+        <div class="detail-value" id="profileEmail">user@example.com</div>
       </div>
+      <div class="detail-row">
+        <div class="detail-label">Age:</div>
+        <div class="detail-value" id="profileAge">Not set</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Gender:</div>
+        <div class="detail-value" id="profileGender">Not set</div>
+      </div>
+    </div>
 
-      <button class="btn" style="margin-top: 1rem;">Edit Profile</button>
+    <div class="profile-details">
+      <h3 style="color: var(--primary-green); margin-bottom: 1.5rem;">Preferences</h3>
+      <div class="detail-row">
+        <div class="detail-label">Chatbot Persona:</div>
+        <div class="detail-value" id="chatbotPersona">Therapist</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Color Theme:</div>
+        <div class="detail-value" id="colorTheme">Dark</div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn btn-edit-profile">Edit Profile</button>
+      <a href="chatbot.html" class="chatbot-access">
+        <span class="chatbot-icon">💬</span>
+        <span>Access Chatbot</span>
+      </a>
     </div>
   </main>
 
@@ -86,10 +163,61 @@
       </div>
     </div>
     <div class="container copyright">
-      <p>&copy; 2023 AetherPeace. All rights reserved.</p>
+      <p>&copy; 2025 AetherPeace. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="js/profile.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load current user data
+      const currentUser = JSON.parse(localStorage.getItem('current_user'));
+      
+      if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // Populate profile data
+      document.getElementById('profileUsername').textContent = currentUser.username;
+      document.getElementById('profileName').textContent = currentUser.name || 'Not set';
+      document.getElementById('profileEmail').textContent = currentUser.email;
+      document.getElementById('profileAge').textContent = currentUser.age || 'Not set';
+      document.getElementById('profileGender').textContent = currentUser.gender || 'Not set';
+      document.getElementById('chatbotPersona').textContent = currentUser.chatbotPersona || 'Therapist';
+      document.getElementById('colorTheme').textContent = currentUser.colorTheme || 'Dark';
+      document.getElementById('avatarInitial').textContent = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
+      
+      // Edit profile functionality
+      document.querySelector('.btn-edit-profile').addEventListener('click', function() {
+        const newName = prompt('Enter your name:', currentUser.name || '');
+        const newAge = prompt('Enter your age:', currentUser.age || '');
+        const newGender = prompt('Enter your gender:', currentUser.gender || '');
+        
+        if (newName !== null) {
+          // Update current user
+          currentUser.name = newName;
+          currentUser.age = newAge;
+          currentUser.gender = newGender;
+          
+          // Update in localStorage
+          localStorage.setItem('current_user', JSON.stringify(currentUser));
+          
+          // Update in all users database
+          const allUsers = JSON.parse(localStorage.getItem('aetherpeace_users')) || [];
+          const userIndex = allUsers.findIndex(u => u.id === currentUser.id);
+          if (userIndex !== -1) {
+            allUsers[userIndex] = currentUser;
+            localStorage.setItem('aetherpeace_users', JSON.stringify(allUsers));
+          }
+          
+          // Update displayed information
+          document.getElementById('profileName').textContent = currentUser.name || 'Not set';
+          document.getElementById('profileAge').textContent = currentUser.age || 'Not set';
+          document.getElementById('profileGender').textContent = currentUser.gender || 'Not set';
+          document.getElementById('avatarInitial').textContent = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
