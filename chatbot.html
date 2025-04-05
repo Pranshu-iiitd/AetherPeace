@@ -5,6 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chatbot - AetherPeace</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .chatbot-container {
+      display: flex;
+      height: calc(100vh - 150px);
+      gap: 1rem;
+    }
+    .chat-history {
+      width: 250px;
+      background-color: var(--bg-light);
+      padding: 1rem;
+      overflow-y: auto;
+      border-right: 1px solid var(--border-gray);
+    }
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .message {
+      padding: 0.75rem;
+      border-radius: 8px;
+      max-width: 80%;
+      word-break: break-word;
+    }
+    .user-message {
+      background-color: var(--primary-green);
+      margin-left: auto;
+    }
+    .bot-message {
+      background-color: var(--bg-light);
+      margin-right: auto;
+    }
+    .message-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .message-input {
+      flex: 1;
+      padding: 0.75rem;
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-gray);
+      border-radius: 4px;
+      color: var(--text-white);
+    }
+    .emergency-contacts {
+      width: 250px;
+      background-color: var(--bg-light);
+      padding: 1rem;
+      border-left: 1px solid var(--border-gray);
+    }
+    .contact-item {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background-color: var(--bg-dark);
+      border-radius: 4px;
+    }
+    .typing-indicator {
+      display: none;
+      padding: 0.75rem;
+      background-color: var(--bg-light);
+      border-radius: 8px;
+      margin-right: auto;
+      width: fit-content;
+    }
+    .typing-dots {
+      display: inline-block;
+    }
+    .typing-dots span {
+      height: 8px;
+      width: 8px;
+      margin: 0 2px;
+      background-color: var(--text-gray);
+      border-radius: 50%;
+      display: inline-block;
+      animation: typing 1s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    @keyframes typing {
+      0%, 100% { opacity: 0.4; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-3px); }
+    }
+    @media (max-width: 768px) {
+      .chatbot-container {
+        flex-direction: column;
+        height: auto;
+      }
+      .chat-history, .emergency-contacts {
+        width: 100%;
+        border-right: none;
+        border-left: none;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -14,22 +121,12 @@
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <a href="profile.html">Profile</a>
-        <a href="logout.html">Logout</a>
+        <a href="index.html">Logout</a>
       </nav>
     </div>
   </header>
 
-  <main id="passwordGate" class="password-gate">
-    <h2>Enter Password to Access Chat</h2>
-    <form id="passwordForm">
-      <div class="form-group">
-        <input type="password" id="chatPassword" class="form-control" placeholder="Enter password" required>
-      </div>
-      <button type="submit" class="btn">Access Chat</button>
-    </form>
-  </main>
-
-  <main id="chatInterface" style="display: none;">
+  <main>
     <div class="chatbot-container">
       <div class="chat-history">
         <h3>Chat History</h3>
@@ -41,6 +138,13 @@
         <div class="chat-messages" id="chatMessages">
           <!-- Messages will be added here by JavaScript -->
         </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
         <form id="messageForm" class="message-form">
           <input type="text" id="messageInput" class="message-input" placeholder="Type your message..." required>
           <button type="submit" class="btn">Send</button>
@@ -50,7 +154,7 @@
         <h3>Emergency Contacts</h3>
         <div class="contact-item">
           <strong>Mental Health Helpline</strong>
-          <p>919999666555</p>
+          <p>+91 9999666555</p>
         </div>
         <div class="contact-item">
           <strong>Police</strong>
@@ -89,17 +193,241 @@
       <div class="footer-section">
         <h3>Emergency Contacts</h3>
         <ul>
-          <li>Mental Health Helpline: 919999666555</li>
+          <li>Mental Health Helpline: +91 9999666555</li>
           <li>Police: 100</li>
           <li>Ambulance: 108</li>
         </ul>
       </div>
     </div>
     <div class="container copyright">
-      <p>&copy; 2023 AetherPeace. All rights reserved.</p>
+      <p>&copy; 2025 AetherPeace. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="js/chatbot.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageForm = document.getElementById('messageForm');
+      const messageInput = document.getElementById('messageInput');
+      const chatList = document.getElementById('chatList');
+      const typingIndicator = document.getElementById('typingIndicator');
+      
+      // Conversation history
+      let conversationHistory = [];
+      
+      // Enhanced response system for mental health support
+      const responseSystem = {
+        greetings: [
+          "Hello! I'm Aether, your mental health support companion. How are you feeling today?",
+          "Hi there! I'm here to listen. What's on your mind?",
+          "Welcome back. How have you been feeling since we last talked?"
+        ],
+        positiveFeelings: [
+          "I'm glad to hear you're feeling good! Would you like to share what's been going well?",
+          "That's wonderful! Celebrating positive moments is important. What's contributing to your good mood?",
+          "It's great that you're feeling positive. Remember to acknowledge these good moments when tougher times come."
+        ],
+        negativeFeelings: [
+          "I'm sorry you're feeling this way. Would you like to talk more about what's bothering you?",
+          "That sounds difficult. Remember it's okay to feel this way. You're not alone.",
+          "I hear you. These feelings can be challenging. Let's explore them together if you'd like."
+        ],
+        anxietyResponses: [
+          "Anxiety can feel overwhelming. Try taking slow, deep breaths with me - inhale for 4 seconds, hold for 4, exhale for 6.",
+          "When anxiety strikes, grounding techniques can help. Name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.",
+          "Anxiety often makes us focus on the 'what ifs.' Can you identify something in this moment that's actually okay?"
+        ],
+        depressionResponses: [
+          "Depression can make everything feel heavy. Remember that small steps still count as progress.",
+          "You're showing strength by reaching out, even if it doesn't feel that way. That matters.",
+          "On difficult days, even basic self-care is an achievement. Be gentle with yourself."
+        ],
+        stressResponses: [
+          "Stress affects us all differently. What specific situation is causing you stress right now?",
+          "When stressed, breaking things into smaller steps can help. What's one small thing you could do to feel slightly better?",
+          "Remember to take breaks when stressed. Even a 5-minute walk or stretch can reset your perspective."
+        ],
+        generalSupport: [
+          "I'm here to listen whenever you need to talk.",
+          "Your feelings are valid and important. Thank you for sharing them with me.",
+          "Whatever you're experiencing, you don't have to go through it alone."
+        ],
+        copingStrategies: [
+          "Some people find journaling helpful. Would you like to try writing down your thoughts?",
+          "Mindfulness exercises can help ground us in the present moment. Would you like to try a simple one now?",
+          "Physical activity, even gentle movement, can sometimes help shift our mood. Is that something you might try?"
+        ],
+        emergency: [
+          "If you're in crisis, please consider reaching out to a professional. Would you like me to show you the emergency contacts again?",
+          "Your safety is important. The emergency contacts are always available if you need immediate support.",
+          "For serious concerns, professional help can provide the support you deserve. You'll find emergency contacts to the right."
+        ],
+        farewell: [
+          "Remember I'm here whenever you need to talk. Take care of yourself.",
+          "Our conversation is saved if you want to continue later. Be gentle with yourself.",
+          "Thank you for sharing with me. Come back anytime you need support."
+        ]
+      };
+
+      // Keyword triggers for specific responses
+      const responseTriggers = {
+        'hello|hi|hey': 'greetings',
+        'good|great|happy|joy|joyful|better|positive': 'positiveFeelings',
+        'sad|depressed|down|low|miserable|hopeless': 'depressionResponses',
+        'anxious|anxiety|nervous|panic|worried|scared': 'anxietyResponses',
+        'stress|stressed|overwhelmed|pressure': 'stressResponses',
+        'help|emergency|suicide|hurt myself|end it all': 'emergency',
+        'bye|goodbye|see you|later': 'farewell',
+        'cope|coping|strategy|manage|handle': 'copingStrategies'
+      };
+
+      // Load previous conversations from localStorage
+      function loadConversations() {
+        const conversations = JSON.parse(localStorage.getItem('aetherpeace_conversations')) || [];
+        chatList.innerHTML = '';
+        
+        conversations.forEach((convo, index) => {
+          const chatItem = document.createElement('div');
+          chatItem.className = 'chat-item';
+          chatItem.innerHTML = `
+            <strong>${convo.title || `Conversation ${index + 1}`}</strong>
+            <small>${new Date(convo.lastUpdated).toLocaleDateString()}</small>
+          `;
+          chatItem.addEventListener('click', () => loadConversation(index));
+          chatList.appendChild(chatItem);
+        });
+      }
+      
+      // Load a specific conversation
+      function loadConversation(index) {
+        const conversations = JSON.parse(localStorage.getItem('aetherpeace_conversations')) || [];
+        if (conversations[index]) {
+          conversationHistory = conversations[index].messages;
+          renderMessages();
+        }
+      }
+      
+      // Save current conversation
+      function saveConversation() {
+        const conversations = JSON.parse(localStorage.getItem('aetherpeace_conversations')) || [];
+        const lastUserMessage = conversationHistory
+          .filter(msg => msg.role === "user")
+          .pop()?.content || "New conversation";
+        
+        // Create a title from the first few words of the last user message
+        const title = lastUserMessage.length > 30 
+          ? lastUserMessage.substring(0, 30) + '...' 
+          : lastUserMessage;
+        
+        // Add or update conversation
+        const existingIndex = conversations.findIndex(c => c.id === currentConversationId);
+        if (existingIndex >= 0) {
+          conversations[existingIndex] = {
+            ...conversations[existingIndex],
+            messages: conversationHistory,
+            lastUpdated: new Date().toISOString()
+          };
+        } else {
+          conversations.push({
+            id: Date.now().toString(),
+            title,
+            messages: conversationHistory,
+            lastUpdated: new Date().toISOString()
+          });
+        }
+        
+        localStorage.setItem('aetherpeace_conversations', JSON.stringify(conversations));
+        loadConversations();
+      }
+      
+      // Render all messages in the chat
+      function renderMessages() {
+        chatMessages.innerHTML = '';
+        conversationHistory.forEach(msg => {
+          addMessage(msg.content, msg.role === "user" ? "user" : "bot");
+        });
+      }
+      
+      // Add a new message to the chat
+      function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+      
+      // Show typing indicator
+      function showTyping() {
+        typingIndicator.style.display = 'block';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+      
+      // Hide typing indicator
+      function hideTyping() {
+        typingIndicator.style.display = 'none';
+      }
+      
+      // Get appropriate bot response
+      function getBotResponse(userMessage) {
+        // Convert to lowercase for matching
+        const lowerMessage = userMessage.toLowerCase();
+        
+        // Check for specific triggers
+        for (const [pattern, responseType] of Object.entries(responseTriggers)) {
+          if (new RegExp(pattern).test(lowerMessage)) {
+            const possibleResponses = responseSystem[responseType];
+            return possibleResponses[Math.floor(Math.random() * possibleResponses.length)];
+          }
+        }
+        
+        // Default responses if no specific trigger matched
+        if (lowerMessage.length < 5) {
+          return "Would you like to share more about what you're experiencing?";
+        }
+        
+        return responseSystem.generalSupport[
+          Math.floor(Math.random() * responseSystem.generalSupport.length)
+        ];
+      }
+      
+      // Track current conversation
+      let currentConversationId = null;
+      
+      // Handle form submission
+      messageForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+        if (!message) return;
+        
+        addMessage(message, 'user');
+        conversationHistory.push({ role: 'user', content: message });
+        messageInput.value = '';
+        
+        showTyping();
+        
+        // Simulate thinking delay
+        setTimeout(() => {
+          const botResponse = getBotResponse(message);
+          addMessage(botResponse, 'bot');
+          conversationHistory.push({ role: 'assistant', content: botResponse });
+          saveConversation();
+          hideTyping();
+        }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+      });
+      
+      // Start with welcome message if new conversation
+      if (conversationHistory.length === 0) {
+        const welcomeMessage = responseSystem.greetings[
+          Math.floor(Math.random() * responseSystem.greetings.length)
+        ];
+        addMessage(welcomeMessage, 'bot');
+        conversationHistory.push({ role: 'assistant', content: welcomeMessage });
+      }
+      
+      // Load previous conversations
+      loadConversations();
+    });
+  </script>
 </body>
 </html>
